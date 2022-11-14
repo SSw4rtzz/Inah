@@ -1,0 +1,25 @@
+{
+  "name": "inah",
+  "version": "0.6.0",
+  "description": "I'm not a human é um bot discord em desenvolvimento e nas suas fazes iniciais de vida",
+  "main": "index.js",
+  "scripts": {
+    "test": "/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SSw4rtzz/Inah.git"
+  },
+  "keywords": [
+    "inah"
+  ],
+  "author": "Sw4rtz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SSw4rtzz/Inah/issues"
+  },
+  "homepage": "https://github.com/SSw4rtzz/Inah#readme",
+  "dependencies": {
+    "discord.js": "^14.6.0"
+  }
+}
