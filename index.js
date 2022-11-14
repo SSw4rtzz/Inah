@@ -23,10 +23,74 @@
 
 //client.user.setAvatar("https://bdocodex.com/items/ui_artwork/ic_04389.png"); //Muda imagem do BOT
 
-const { SlashCommandBuilder } = require("@discordjs/builders");
+// Importando as bibliotecas do discord.js
+const { Client, Events, Routes, Collection, GatewayIntentBits } = require('discord.js');
+const { REST } = require('discord.js');
+const { token, clint_id, guildId } = require('./config.json');
+
+// Cria uma nova instância do cliente do Discord
+const client = new Client({
+    intents:[
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.MessageContent,
+    ] });
+
+const fs = require('node:fs');
+const path = require('node:path');
+
+
+const rest = new REST({ version: '10' }).setToken(token);
+
+// Quando o cliente estiver pronto, executa este código
+// We use 'c' for the event parameter to keep it separate from the already defined 'client'
+client.on('ready', () => {
+	console.log(`Ready! Logged in as ${client.user.tag}`);
+});
+
+client.on('interactionCreate', (interaction) => {
+    if(interaction.isChatInputCommand()){
+        console.log('Comando de teste executado');
+        interaction.reply({content: 'Testado!'});
+    }
+});
+
+client.on('messageCreate', message => {
+    if (message.content === 'ping') {
+        message.channel.send('Pong.');
+    }
+});
+
+async function main(){
+    const commands = [
+        {
+            name: 'teste',
+            description: 'Testa se o bot está a funcionar',
+        },
+    ];
+    try {
+        console.log('Started refreshing application (/) commands.');
+        await rest.put(Routes.applicationGuildCommands(clint_id, guildId), {
+          body: commands,
+        });
+        client.login(token);
+      } catch (err) {
+        console.log(err);
+      }
+}
+
+main();
+
+// Log in to Discord with your client's token
+//client.login(token);
 
 
 
+
+
+
+
+/*
 const {
     Client,
     GatewayIntentBits,
@@ -53,17 +117,6 @@ client.on('ready', () => {
     //bossesTimer();
 });
 
-
-//const {slashCommands} = require('discord.js');
-
-module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('ping')
-		.setDescription('Replies with Pong!'),
-	async execute(interaction) {
-		await interaction.reply('Pong!');
-	},
-};
 
 client.on('message', message => {
     if (message.content === 'ping') {
